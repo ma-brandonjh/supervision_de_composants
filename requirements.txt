@@ -1,0 +1,9 @@
+# pip install -r requirements.txt
+
+certifi==2025.4.26
+charset-normalizer==3.4.2
+idna==3.10
+lgpio==0.2.2.0
+requests==2.32.3
+rpi-lgpio==0.6
+urllib3==2.4.0
