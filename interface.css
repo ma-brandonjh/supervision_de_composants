@@ -5,6 +5,7 @@
 
 header{
     background-color: aquamarine;
+    padding:2%;
 }
 
 header ul{
@@ -18,7 +19,6 @@ header ul li{
 
 ul{
     display:flex;
-    padding:5%;
     text-decoration: none;
     text-decoration-style: none;
 }
@@ -32,6 +32,7 @@ li{
 main{
     display:flex;
     align-items: flex-start;
+    margin:2%;
 }
 
 .divb{
@@ -48,6 +49,7 @@ main{
     border-radius:8px;
     border:2px solid;
     padding:2%;
+    margin:1%;
     width:40%;
 }
 
@@ -57,6 +59,7 @@ button{
     padding-bottom:5px;
     padding-left:10px;
     padding-right:10px;
+    border-color:red;
 }
 
 table{

@@ -7,73 +7,12 @@
     </head>
     <body>
         <header>
-            <h1>Bienvenue: Interface de contrôle des iots</h1>
-            <ul>
-                <li><button>Rafraichir</button></li>
-            </ul>
+            <h1>Bienvenue --- Interface de contrôle des iots</h1>
         </header>
         <main>
             <div class="diva">
-            <h2>Journal des dernières mesures</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Température</th>
-                        <th>Humidité</th>
-                    </tr>
-                    <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                    <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                    <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                                        <tr>
-                        <th>13 mai 21h46</th>
-                        <th>12C</th>
-                        <th>45%</th>
-                    </tr>
-                </thead>
-            </table>
+            <h2>Journal des dernières mesures</h2><br>
+                <div id="table-container"></div>
             </div>
             <hr>
             <div class="diva">
@@ -84,6 +23,9 @@
                 <h4>État: éteinte</h4>
             <h3>LED de la cuisine</h3>
                 <h4>État éteinte</h4>
+            <ul>
+                <li><button>Rafraichir</button></li>
+            </ul>
             </div>
             <hr>
             <div class="diva">
@@ -108,4 +50,55 @@
         <nav></nav>
         <footer></footer>
     </body>
+
+    <script>
+        const data = [
+            {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56},
+            {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56}
+        ]
+
+        //JSON type avec ou sans entête???
+
+        function generateTable(data){
+            const container = document.getElementById("table-container")
+
+            if (data.length===0){
+                container.innerHTML = "<p> Aucune donnée.</p>";
+                return;
+            }
+
+            const table = document.createElement("table");
+            const thead = document.createElement("thead");
+            const tbody = document.createElement("tbody");
+
+            // En tête
+            const headers = Object.keys(data[0]);
+            const headerRow = document.createElement("tr");
+            headers.forEach(key =>{
+                const th = document.createElement("th");
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+
+            // Créer les lignes du tableau
+            data.forEach(item => {
+            const row = document.createElement("tr");
+            headers.forEach(key => {
+                const td = document.createElement("td");
+                td.textContent = item[key];
+                row.appendChild(td);
+            });
+            tbody.appendChild(row);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
+
+  generateTable(data);
+
+    </script>
+
+
 </html>
