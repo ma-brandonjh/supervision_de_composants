@@ -1,0 +1,17 @@
+DHT11 Sensor
+
+dispositif face quadrillée vers nous et pin vers le bas:
+pin 1 = VCC 3.3V idéalement (parfois avec résistance de 4.7kOhms ou 10kOhms)
+pin 2 = input DATA
+pin 3 = NC
+pin 4 = GND
+https://newbiely.com/tutorials/arduino-micropython/arduino-micropython-dht11-temperature-humidity-sensor
+
+branché la pin 1 sur VCC sur le 3.3V***
+branchez la pin 2 sur un GPIO ici #24
+branchez la pin 4 sur GND
+ajoutez un 10kOhms pour faire un bridge/lien entre pins 1 et 2 (modèle bleu, sans carte pcb apparente)
+
+***installer bibliothèque***
+sudo apt install libgpiod2
+pip install adafruit-circuitpython-dht
