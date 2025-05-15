@@ -40,6 +40,7 @@ main{
     border:2px solid;
     padding:2%;
     margin:2%;
+    background-color: rgb(207, 207, 207);
 }
 
 .diva{
@@ -51,6 +52,21 @@ main{
     padding:2%;
     margin:1%;
     width:40%;
+    background-color: rgba(139, 255, 255, 0.377);
+}
+
+.diva table{
+    border-radius: 8px;
+    padding:1%;
+}
+
+h3{
+    text-decoration: underline;
+    margin-top:15px;
+}
+
+.divc{
+    background-color: white;
 }
 
 button{
@@ -60,6 +76,7 @@ button{
     padding-left:10px;
     padding-right:10px;
     border-color:red;
+    margin:2%;
 }
 
 table{

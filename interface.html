@@ -12,17 +12,17 @@
         <main>
             <div class="diva">
             <h2>Journal des dernières mesures</h2><br>
-                <div id="table-container"></div>
+                <div class="divc" id="table-container"></div>
             </div>
             <hr>
             <div class="diva">
             <h2>État des LEDs</h2>
-            <h3>LED de la chambre</h3>
-                <h4>État: allumée</h4>
-            <h3>LED du salon</h3>
-                <h4>État: éteinte</h4>
-            <h3>LED de la cuisine</h3>
-                <h4>État éteinte</h4>
+            <h3>LED de la chambre:</h3>
+                <h4>allumée</h4>
+            <h3>LED du salon:</h3>
+                <h4>éteinte</h4>
+            <h3>LED de la cuisine:</h3>
+                <h4>éteinte</h4>
             <ul>
                 <li><button>Rafraichir</button></li>
             </ul>
@@ -32,18 +32,18 @@
             <h2>Contrôle des LEDs</h2>
         <div class="divb">
             <h3>Chambre</h3>
-                <button>on</button>
-                <button>off</button>
+                <button onclick="envoyerCommande('chambre/on')">ON</button>
+                <button onclick="envoyerCommande('chambre/off')">OFF</button>
         </div>
         <div class="divb">
             <h3>Salon</h3>
-                <button>on</button>
-                <button>off</button>
+                <button onclick="envoyerCommande('salon/on')">ON</button>
+                <button onclick="envoyerCommande('salon/off')">OFF</button>
         </div>
         <div class="divb">
             <h3>Cuisine</h3>
-                <button>on</button>
-                <button>off</button>
+                <button onclick="envoyerCommande('cuisine/on')">ON</button>
+                <button onclick="envoyerCommande('cuisine/off')">OFF</button>
         </div>
             </div>
         </main>
@@ -52,12 +52,25 @@
     </body>
 
     <script>
-        const data = [
+        const data = [ //pour generateTable
             {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56},
             {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56}
         ]
 
-        //JSON type avec ou sans entête???
+        function envoyerCommande(etat) {
+            fetch('/led', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ led: etat }) // {"led": "chambre/on"} ou {"led": "salon/off"}
+            })
+            console.log(body)
+            .then(res => res.text())
+            .then(data => console.log("Réponse:", data))
+            .catch(err => console.error("Erreur:", err));
+        }
+
 
         function generateTable(data){
             const container = document.getElementById("table-container")
