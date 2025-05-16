@@ -40,6 +40,7 @@ main{
     border:2px solid;
     padding:2%;
     margin:2%;
+    width: 150px;
     background-color: rgb(207, 207, 207);
 }
 
@@ -55,6 +56,11 @@ main{
     background-color: rgba(139, 255, 255, 0.377);
 }
 
+h1{
+    display:flex;
+    justify-content:center;
+}
+
 .diva table{
     border-radius: 8px;
     padding:1%;
@@ -62,12 +68,35 @@ main{
 
 h3{
     text-decoration: underline;
-    margin-top:15px;
+    margin-top:8px;
+}
+
+h4{
+    margin-bottom:8px;
 }
 
 .divc{
     background-color: white;
 }
+
+header ul li button{
+    width:200px;
+}
+
+header ul {
+    display:flex;
+    justify-content: center;
+}
+
+ul{
+    list-style-type:none;
+}
+
+header ul li button a{
+    text-decoration: none;
+    color:black;
+}
+
 
 button{
     border-radius: 8px;
@@ -75,7 +104,7 @@ button{
     padding-bottom:5px;
     padding-left:10px;
     padding-right:10px;
-    border-color:red;
+    border-color:black;
     margin:2%;
 }
 
@@ -86,4 +115,15 @@ table{
 th{
     border:solid;
     padding:1%;
+}
+
+footer{
+    display:flex;
+    justify-content:center;
+    align-content:center;
+}
+
+button:hover{
+    background-color: rgb(151, 248, 248);
+    border-color:red;
 }

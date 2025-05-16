@@ -1,14 +1,24 @@
 <!doctype html>
-<html>
+<html lang="fr">
     <head>
+        <meta charset="UTF-8">
         <title>Interface</title>
         <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
     </head>
     <body>
         <header>
-            <h1>Bienvenue --- Interface de contrôle des iots</h1>
+            <h1>Tableau de bord --- Interface de contrôle des iots</h1>
+            <ul>
+                <li><button><a href="/">Accueil</a></button></li>
+                <li><button><a href="/mesure">Température et humidité</a></button></li>
+                <li><button><a href="/led-cmd">Contrôle des LEDs</a></button></li>
+                <li><button><a href="/led-state">États des LEDs</a></button></li>
+            </ul>
         </header>
+
+<hr>
+
         <main>
             <div class="diva">
             <h2>Journal des dernières mesures</h2><br>
@@ -48,15 +58,20 @@
             </div>
         </main>
         <nav></nav>
+
+<hr>
+
         <footer>
+            <h4>Développement uniquement:</h4>
             <button>Get DHT11 data</button>
             <button>Test 2</button>
             <button>Test 3</button>
-                <form action="/led" method="POST">
-                <input type="hidden" name="led" value="rouge">
-                <input type="hidden" name="etat" value="on">
-                <button type="submit">Allumer</button>
-                </form>
+            <form action="/led" method="POST">
+            <input type="hidden" name="led" value="rouge">
+            <input type="hidden" name="etat" value="on">
+            <button type="submit">Allumer</button>
+            <button onclick="getStatus()">Obtenir le status des IoTs</button>
+            </form>
         </footer>
     </body>
 
@@ -136,5 +151,17 @@ function envoyerCommande(commande) {
     .catch(err => console.error("Erreur :", err));
 }
 </script>
-
+<script>
+    function getStatus() {
+      fetch('localhost:3000')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('resultat').innerText = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          console.error('Erreur :', error);
+          document.getElementById('resultat').innerText = 'Erreur lors de la requête';
+        });
+    }
+</script>
 </html>

@@ -4,17 +4,34 @@ const path = require('path');
 
 const serveur = http.createServer((req, res) => {
     console.log(`Requête reçue : ${req.method} ${req.url}`);
-      let filePath = './' + (req.url === '/' ? 'public/index.html' : req.url);
 
-    if (req.method === 'GET' && (req.url === '/' || req.url === '/index.html')) {
-        //const filePath = path.join(__dirname, 'public', 'index.html');
+    let filePath = '';
+    let contentType = 'text/html';
+
+    if (req.method === 'GET') {
+        if (req.url === '/' || req.url === '/index.html') {
+            filePath = path.join(__dirname, 'public', 'index.html');
+        } else if (req.url === '/mesure') {
+            filePath = path.join(__dirname, 'public', 'page1.html');
+        } else if (req.url === '/led-cmd') {
+            filePath = path.join(__dirname, 'public', 'page2.html');
+        } else if (req.url === '/led-state') {
+            filePath = path.join(__dirname, 'public', 'page3.html');
+        } else {
+            // URL inconnue
+            res.writeHead(404);
+            res.end('Page non trouvée');
+            return;
+        }
+
+        // Lecture et envoi du fichier
         fs.readFile(filePath, (err, data) => {
             if (err) {
                 res.writeHead(500);
                 res.end('Erreur serveur');
                 return;
             }
-            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.writeHead(200, { 'Content-Type': contentType });
             res.end(data);
         });
     }
