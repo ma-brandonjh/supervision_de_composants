@@ -1,6 +1,6 @@
 # 15 mai 2025 MVL
 # voir fichier DHT11.txt pour s'assurer d'avoir le même modèle bleu sans pcb
-# voir les branchements et bibliothèques requis
+# voir les branchements à faire et bibliothèques requises
 import time
 import board
 import adafruit_dht
