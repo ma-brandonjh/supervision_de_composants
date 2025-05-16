@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Interface</title>
-        <link rel="stylesheet" href="interface.css">
+        <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
     </head>
     <body>
@@ -48,7 +48,16 @@
             </div>
         </main>
         <nav></nav>
-        <footer></footer>
+        <footer>
+            <button>Get DHT11 data</button>
+            <button>Test 2</button>
+            <button>Test 3</button>
+                <form action="/led" method="POST">
+                <input type="hidden" name="led" value="rouge">
+                <input type="hidden" name="etat" value="on">
+                <button type="submit">Allumer</button>
+                </form>
+        </footer>
     </body>
 
     <script>
@@ -57,19 +66,21 @@
             {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56}
         ]
 
-        function envoyerCommande(etat) {
-            fetch('/led', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ led: etat }) // {"led": "chambre/on"} ou {"led": "salon/off"}
-            })
-            console.log(body)
-            .then(res => res.text())
-            .then(data => console.log("Réponse:", data))
-            .catch(err => console.error("Erreur:", err));
-        }
+        function envoyerCommande(commande) {
+  fetch('/led', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ led: commande })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.text();
+  })
+  .then(txt => console.log('Réponse du serveur :', txt))
+  .catch(err => console.error('Erreur POST :', err));
+}
+
+
 
 
         function generateTable(data){
@@ -113,5 +124,17 @@
 
     </script>
 
+<script>
+function envoyerCommande(commande) {
+    fetch('/led', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ led: commande })
+    })
+    .then(res => res.text())
+    .then(data => console.log("Réponse du serveur :", data))
+    .catch(err => console.error("Erreur :", err));
+}
+</script>
 
 </html>
