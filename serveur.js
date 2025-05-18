@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
+const path = require('path');
 
 function errorMessage(){
 
@@ -25,6 +26,15 @@ const server = http.createServer((req, res) => {
     if (method === "POST"){
         switch (direction){
             case '/led':
+                let body = '';
+                req.on('data', chunk => body += chunk);
+                req.on('end', () => {
+                    console.log('Données POST:', body);
+                    res.writeHead(200);
+                    res.end(`Données reçues : ${body}`);
+                });
+                break;
+            case '/donnees':
                 // req.on('data', chunk => body += chunk);
                 // req.on('end', () => {
                 // try {
@@ -45,23 +55,25 @@ const server = http.createServer((req, res) => {
                 // }
                 // });
                 break;
-            case '/donnees':
-                // req.on('data', chunk => {
-                //     body += chunk.toString();
-                // });
-
-                // req.on('end', () => {
-                //     console.log('Requête reçue :', body);
-                //     res.writeHead(200, { 'Content-Type': 'application/json' });
-                //     res.end('Reçu\n');
-                // });
-                break;
             default:
                 errorMessage();
                 break;
         }
     } else if (method === "GET"){
         switch (direction){
+            // case '/':
+            // case '/index.html':
+            //     filePath = path.join(__dirname, 'public', 'index.html');
+            //     break;
+            // case '/mesure':
+            //     filePath = path.join(__dirname, 'public', 'page1.html');
+            //     break;
+            // case 'led-cmd':
+            //     filePath = path.join(__dirname, 'public', 'page2.html');
+            //     break;
+            // case '/led-state':
+            //     filePath = path.join(__dirname, 'public', 'page3.html');
+            //     break;
             case '/mesures':
                     const mesures = readJsonFile('./Template_JSON/JSON-MESURES.json');
                     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -76,8 +88,18 @@ const server = http.createServer((req, res) => {
                 errorMessage();
                 break;
         }
-    } else {
 
+        // fs.readFile(filePath, (err, data) => {
+        //             if (err) {
+        //                 res.writeHead(500);
+        //                 res.end('Erreur serveur');
+        //                 return;
+        //             }
+        //             res.writeHead(200, { 'Content-Type': 'text/html' });
+        //             res.end(data);
+        // });
+    } else {
+        errorMessage();
     }
 
 });
