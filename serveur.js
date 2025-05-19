@@ -3,13 +3,33 @@ const fs = require('fs');
 const url = require('url');
 const path = require('path');
 
-function errorMessage(){
-
+function errorMessage(message){
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end(message)
 }
 
 function readJsonFile(file){
     const data = fs.readFileSync(file, 'utf-8')
     return JSON.parse(data)
+}
+
+function getDonnees(){
+    const data = readJsonFile('./Template_JSON/JSON-MESURES.json');
+    const mesures = data['dht'];
+    return mesures
+}
+
+function writeLed(key, value){
+    const data = readJsonFile('./Template_JSON/JSON-LED-STATE.json');
+    data[key] = value;
+    fs.writeFileSync('./Template_JSON/JSON-LED-STATE.json', JSON.stringify(data, null, 2));
+    writeDonnees(data, 'led')
+}
+
+function writeDonnees(entry, key){
+    const data = readJsonFile('./Template_JSON/JSON-MESURES.json');
+    data[key] = entry;
+    fs.writeFileSync('./Template_JSON/JSON-MESURES.json', JSON.stringify(data, null, 2));
 }
 
 const server = http.createServer((req, res) => {
@@ -26,37 +46,44 @@ const server = http.createServer((req, res) => {
     if (method === "POST"){
         switch (direction){
             case '/led':
-                let body = '';
+                body = '';
                 req.on('data', chunk => body += chunk);
                 req.on('end', () => {
-                    console.log('Données POST:', body);
-                    res.writeHead(200);
-                    res.end(`Données reçues : ${body}`);
+                    try{
+                        console.log('Données POST:', body);
+                        const data = JSON.parse(body);
+                        const key = Object.keys(data)[0]
+                        const value = data[key]
+                        writeLed(key, value)
+                        res.writeHead(201);
+                        res.end(`Données reçues : ${body}`);
+                    } catch (err){
+                        errorMessage('Données invalides');
+                    }
                 });
                 break;
             case '/donnees':
-                // req.on('data', chunk => body += chunk);
-                // req.on('end', () => {
-                // try {
-                //     const data = JSON.parse(body);
-                //     const livres = lireLivres();
-                //     const nouveauLivre = {
-                //     id: livres.length ? livres[livres.length - 1].id + 1 : 1,
-                //     titre: data.titre,
-                //     auteur: data.auteur
-                //     };
-                //     livres.push(nouveauLivre);
-                //     ecrireLivres(livres);
-                //     res.writeHead(201, { 'Content-Type': 'application/json' });
-                //     res.end(JSON.stringify(nouveauLivre));
-                // } catch (err) {
-                //     res.writeHead(400, { 'Content-Type': 'text/plain' });
-                //     res.end('Données invalides');
-                // }
-                // });
+                body = '';
+                req.on('data', chunk => body += chunk);
+                req.on('end', () => {
+                try {
+                    const data = JSON.parse(body);
+                    const mesures = getDonnees();
+                    if (mesures.length === 10){
+                        mesures.shift();
+                    }
+                    
+                    mesures.push(data)
+                    writeDonnees(mesures, 'dht');
+                    res.writeHead(201, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(data));
+                } catch (err) {
+                    errorMessage('Données invalides');
+                }
+                });
                 break;
             default:
-                errorMessage();
+                errorMessage('Ce URL n\'existe pas');
                 break;
         }
     } else if (method === "GET"){
@@ -85,7 +112,7 @@ const server = http.createServer((req, res) => {
                     res.end(JSON.stringify(leds))
                 break;
             default:
-                errorMessage();
+                errorMessage('Ce URL n\'existe pas');
                 break;
         }
 
@@ -99,7 +126,7 @@ const server = http.createServer((req, res) => {
         //             res.end(data);
         // });
     } else {
-        errorMessage();
+        errorMessage('Cette fonction n\'est pas disponible');
     }
 
 });
