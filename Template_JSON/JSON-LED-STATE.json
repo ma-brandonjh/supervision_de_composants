@@ -1,1 +1,5 @@
-{"chambre": "on", "salon":"off", "cuisine":"on"}
+{
+  "chambre": "on",
+  "salon": "off",
+  "cuisine": "on"
+}
