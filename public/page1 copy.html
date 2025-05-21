@@ -2,7 +2,6 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="5">
         <title>Mesure</title>
         <style>
             *{
@@ -170,54 +169,46 @@ button:hover{
 
 
 <script>
-
-
-function rafraichirTable(){
-    const data = randomData();
-    generateTable(data);
-}
-
-/* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
 function randomData() {
-  const n = Math.floor(Math.random() * 16);            // 0-15 éléments
+  const n = Math.floor(Math.random() * 16); // 0 à 15
   const maintenant = Date.now();
   const unJour = 24 * 60 * 60 * 1000;
-
   const arr = [];
+
   for (let i = 0; i < n; i++) {
-    // Date aléatoire dans les 365 derniers jours
     const offset = Math.floor(Math.random() * 365) * unJour;
     const d = new Date(maintenant - offset);
-
-    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
-    const fmt = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' })
-               + ' ' +
-               d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' }).replace(':', 'h');
+    const fmt = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                ' ' +
+                d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
 
     arr.push({
       date: fmt,
-      température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
-      humidité: Math.floor(Math.random() * 101)            // 0 → 100
+      température: (Math.random() * 55 - 20).toFixed(1), // -20 à +35
+      humidité: Math.floor(Math.random() * 101)          // 0 à 100 %
     });
   }
+
   return arr;
 }
 
-/* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
+function parseDate(str) {
+  return new Date(str.replace('h', ':'));
+}
+
 function generateTable(data) {
   const container = document.getElementById("table-container");
-  container.innerHTML = '';                        // réinitialiser
+  container.innerHTML = '';
 
   if (!data.length) {
     container.textContent = "Aucune donnée.";
     return;
   }
 
-  const table  = document.createElement("table");
-  const thead  = document.createElement("thead");
-  const tbody  = document.createElement("tbody");
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
 
-  // En-têtes
   const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
   const headerRow = document.createElement("tr");
   headers.forEach(label => {
@@ -227,22 +218,18 @@ function generateTable(data) {
   });
   thead.appendChild(headerRow);
 
-  // Corps (au plus 10 lignes)
   data.slice(0, 10).forEach(item => {
     const tr = document.createElement("tr");
 
-    // Date
     const tdDate = document.createElement("td");
     tdDate.textContent = item.date;
     tr.appendChild(tdDate);
 
-    // Température + unité
     const tdTemp = document.createElement("td");
     tdTemp.textContent = `${item.température} °C`;
     tr.appendChild(tdTemp);
 
-    // Humidité + unité
-    const tdHum  = document.createElement("td");
+    const tdHum = document.createElement("td");
     tdHum.textContent = `${item.humidité} %`;
     tr.appendChild(tdHum);
 
@@ -254,8 +241,28 @@ function generateTable(data) {
   container.appendChild(table);
 }
 
-</script>
+function rafraichirTable() {
+  fetch('/mesures')
+    .then(res => {
+      if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      // On suppose que les données ont la même structure que randomData()
+      if (!Array.isArray(data)) throw new Error("Données invalides");
+      data.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+      generateTable(data);
+    })
+    .catch(err => {
+      console.warn("Fetch échoué, utilisation des données aléatoires :", err);
+      const data = randomData().sort((a, b) => parseDate(b.date) - parseDate(a.date));
+      generateTable(data);
+    });
+}
 
+// Affiche au chargement
+rafraichirTable();
+</script>
 
     </body>
 </html>
