@@ -127,3 +127,8 @@ button:hover{
     background-color: rgb(151, 248, 248);
     border-color:red;
 }
+
+.center{
+    display:flex;
+    justify-content: center;
+}

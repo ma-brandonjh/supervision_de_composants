@@ -2,12 +2,13 @@
  
 
 # pour tester l'interface:
-    1-démarer à l'aide de la commande: ''node interface.js'' sur bash
+    1-démarer à l'aide de la commande: ''node serveur.js'' sur bash
     2-cliquer à l'aide de control sur le lien localhost généré dans le terminal
 
 # arborescence
 /
-    -interface.js (serveur pour tester l'interface)
+    -serveur.js (fichier du serveur)
+    -index.css (copie du fichier CSS)
 
     --outils
         --module_DHT11
@@ -18,10 +19,11 @@
         -JSON-DHT11 (suggestion pour transmettre informations module temperature-humidité)
         -JSON-LED-CMD.json (suggestion pour commandes des leds)
         -JSON-LED-STATE.json (suggestion pour demander état des leds)
+        -JSON-MESURES.json (suggestion pour mesures temp/humidité)
 
     --public
         -index.html (interface)
-        --css
-            -index.css (css de l'interface, non relié pour l'instant (bogue))
-
-
+        -page1.html (données)
+        -page2.html (États des LEDs)
+        -page3.html (Contrôles des LEDs)
+        P.S. CSS intégré au code HTML
