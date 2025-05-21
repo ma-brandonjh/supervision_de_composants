@@ -6,143 +6,144 @@
         <title>Interface</title>
         <meta http-equiv="refresh" content="5">
         <link rel="stylesheet" href="./../index.css">
-                <style>
-            *{
-    padding:0px;
-    margin:0px;
-}
+        <style>
+            * {
+                padding: 0px;
+                margin: 0px;
+            }
 
-header{
-    background-color: aquamarine;
-    padding:2%;
-}
+            header {
+                background-color: aquamarine;
+                padding: 2%;
+            }
 
-header ul{
-    display:flex;
-    align-content:center;
-}
+            header ul {
+                display: flex;
+                align-content: center;
+            }
 
-header ul li{
-    margin:5px;
-}
+            header ul li {
+                margin: 5px;
+            }
 
-ul{
-    display:flex;
-    text-decoration: none;
-    text-decoration-style: none;
-}
+            ul {
+                display: flex;
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
-li{
-    text-decoration: none;
-    text-decoration-style: none;   
-}
-
-
-main{
-    display:flex;
-    align-items: flex-start;
-    margin:2%;
-}
-
-.divb{
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:2%;
-    width: 150px;
-    background-color: rgb(207, 207, 207);
-}
-
-.diva{
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:1%;
-    width:40%;
-    background-color: rgba(139, 255, 255, 0.377);
-}
-
-h1{
-    display:flex;
-    justify-content:center;
-}
-
-.diva table{
-    border-radius: 8px;
-    padding:1%;
-}
-
-h3{
-    text-decoration: underline;
-    margin-top:8px;
-}
-
-h4{
-    margin-bottom:8px;
-}
-
-.divc{
-    background-color: white;
-}
-
-header ul li button{
-    width:200px;
-}
-
-header ul {
-    display:flex;
-    justify-content: center;
-}
-
-ul{
-    list-style-type:none;
-}
-
-header ul li button a{
-    text-decoration: none;
-    color:black;
-}
+            li {
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
 
-button{
-    border-radius: 8px;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:10px;
-    padding-right:10px;
-    border-color:black;
-    margin:2%;
-}
+            main {
+                display: flex;
+                align-items: flex-start;
+                margin: 2%;
+            }
 
-table{
-    border:solid;
-}
+            .divb {
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 2%;
+                width: 150px;
+                background-color: rgb(207, 207, 207);
+            }
 
-th{
-    border:solid;
-    padding:1%;
-}
+            .diva {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 1%;
+                width: 40%;
+                background-color: rgba(139, 255, 255, 0.377);
+            }
 
-footer{
-    display:flex;
-    justify-content:center;
-    align-content:center;
-}
+            h1 {
+                display: flex;
+                justify-content: center;
+            }
 
-button:hover{
-    background-color: rgb(151, 248, 248);
-    border-color:red;
-}
+            .diva table {
+                border-radius: 8px;
+                padding: 1%;
+            }
 
-.center{
-    display:flex;
-    justify-content:center;
-}
+            h3 {
+                text-decoration: underline;
+                margin-top: 8px;
+            }
+
+            h4 {
+                margin-bottom: 8px;
+            }
+
+            .divc {
+                background-color: white;
+            }
+
+            header ul li button {
+                width: 200px;
+            }
+
+            header ul {
+                display: flex;
+                justify-content: center;
+            }
+
+            ul {
+                list-style-type: none;
+            }
+
+            header ul li button a {
+                text-decoration: none;
+                color: black;
+            }
+
+
+            button {
+                border-radius: 8px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-color: black;
+                margin: 2%;
+            }
+
+            table {
+                border: solid;
+            }
+
+            th {
+                border: solid;
+                padding: 1%;
+            }
+
+            footer {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+            }
+
+            button:hover {
+                background-color: rgb(151, 248, 248);
+                border-color: red;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+            }
         </style>
     </head>
+
     <body>
         <header>
             <h1>Tableau de bord --- Interface de contrôle des iots</h1>
@@ -154,241 +155,228 @@ button:hover{
             </ul>
         </header>
 
-<hr>
+        <hr>
 
         <main>
             <div class="diva">
-            <h2>Journal des dernières mesures</h2><br>
+                <h2>Journal des dernières mesures</h2><br>
                 <div class="divc" id="table-container"></div>
-                            <ul>
-                <li><button onclick="rafraichirTable()">Rafraichir</button></li>
-            </ul>
+                <ul>
+                    <li><button onclick="rafraichirTable()">Rafraichir</button></li>
+                </ul>
             </div>
             <hr>
             <div class="diva">
-            <h2>État des LEDs</h2>
-            <h3>LED de la chambre:</h3>
+                <h2>État des LEDs</h2>
+                <h3>LED de la chambre:</h3>
                 <h4 id="etat-chambre">allumée</h4>
-            <h3>LED du salon:</h3>
+                <h3>LED du salon:</h3>
                 <h4 id="etat-salon">éteinte</h4>
-            <h3>LED de la cuisine:</h3>
+                <h3>LED de la cuisine:</h3>
                 <h4 id="etat-cuisine">éteinte</h4>
-            <ul>
-                <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
-            </ul>
+                <ul>
+                    <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
+                </ul>
             </div>
             <hr>
             <div class="diva">
-            <h2>Contrôle des LEDs</h2>
-        <div class="divb">
-            <h3>Chambre</h3>
-                <button onclick="envoyerCommande('chambre/on')">ON</button>
-                <button onclick="envoyerCommande('chambre/off')">OFF</button>
-        </div>
-        <div class="divb">
-            <h3>Salon</h3>
-                <button onclick="envoyerCommande('salon/on')">ON</button>
-                <button onclick="envoyerCommande('salon/off')">OFF</button>
-        </div>
-        <div class="divb">
-            <h3>Cuisine</h3>
-                <button onclick="envoyerCommande('cuisine/on')">ON</button>
-                <button onclick="envoyerCommande('cuisine/off')">OFF</button>
-        </div>
+                <h2>Contrôle des LEDs</h2>
+                <div class="divb">
+                    <h3>Chambre</h3>
+                    <button onclick="envoyerCommande('chambre/on')">ON</button>
+                    <button onclick="envoyerCommande('chambre/off')">OFF</button>
+                </div>
+                <div class="divb">
+                    <h3>Salon</h3>
+                    <button onclick="envoyerCommande('salon/on')">ON</button>
+                    <button onclick="envoyerCommande('salon/off')">OFF</button>
+                </div>
+                <div class="divb">
+                    <h3>Cuisine</h3>
+                    <button onclick="envoyerCommande('cuisine/on')">ON</button>
+                    <button onclick="envoyerCommande('cuisine/off')">OFF</button>
+                </div>
             </div>
         </main>
         <nav></nav>
 
+        <script>
 
-
-    <script>
-        const data = [ //pour generateTable
-            {"time":"13 mai 2025 22h35", "température":20, "humidité":56},
-            {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56},
-            {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56}
-        ]
-
-        function envoyerCommande(commande) {
-  fetch('/led', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ led: commande })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.text();
-  })
-  .then(txt => console.log('Réponse du serveur :', txt))
-  .catch(err => console.error('Erreur POST :', err));
-}
-
-
-
-
-        function generateTable(data){
-            const container = document.getElementById("table-container")
-
-            if (data.length===0){
-                container.innerHTML = "<p> Aucune donnée.</p>";
-                return;
+            function envoyerCommande(commande) {
+                fetch('/led', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ led: commande })
+                })
+                    .then(res => {
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        return res.text();
+                    })
+                    .then(txt => console.log('Réponse du serveur :', txt))
+                    .catch(err => console.error('Erreur POST :', err));
             }
 
-            const table = document.createElement("table");
-            const thead = document.createElement("thead");
-            const tbody = document.createElement("tbody");
+            function generateTable(data) {
+                const container = document.getElementById("table-container")
 
-            // En tête
-            const headers = ['Time', 'Température', 'Humidité'];
-            const headerRow = document.createElement("tr");
-            headers.forEach(key =>{
-                const th = document.createElement("th");
-                th.textContent = key;
-                headerRow.appendChild(th);
-            });
+                if (data.length === 0) {
+                    container.innerHTML = "<p> Aucune donnée.</p>";
+                    return;
+                }
 
-            // Créer les lignes du tableau
-            data.forEach(item => {
-            const row = document.createElement("tr");
-            headers.forEach(key => {
-                const td = document.createElement("td");
-                td.textContent = item[key];
-                row.appendChild(td);
-            });
-            tbody.appendChild(row);
-            });
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+                const tbody = document.createElement("tbody");
 
-            table.appendChild(thead);
-            table.appendChild(tbody);
-            container.appendChild(table);
-        }
+                // En tête
+                const headers = ['Time', 'Température', 'Humidité'];
+                const headerRow = document.createElement("tr");
+                headers.forEach(key => {
+                    const th = document.createElement("th");
+                    th.textContent = key;
+                    headerRow.appendChild(th);
+                });
 
-  generateTable(data);
+                // Créer les lignes du tableau
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    headers.forEach(key => {
+                        const td = document.createElement("td");
+                        td.textContent = item[key];
+                        row.appendChild(td);
+                    });
+                    tbody.appendChild(row);
+                });
 
-    </script>
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(table);
+            }
 
-<script>
-  function rafraichirJSON() {
-    const pièces = ["chambre", "salon", "cuisine"];
-    const états = {};
+        </script>
 
-    pièces.forEach(p => {
-      const état = Math.random() < 0.5 ? "off" : "on";
-      états[p] = état;
+        <script>
+            function rafraichirJSON() {
+                const pièces = ["chambre", "salon", "cuisine"];
+                const états = {};
 
-      // Mise à jour dans le HTML (on → allumée, off → éteinte)
-      const texte = état === "on" ? "allumée" : "éteinte";
-      const id = "etat-" + p;
-      const element = document.getElementById(id);
-      if (element) {
-        element.textContent = texte;
-      }
-    });
+                pièces.forEach(p => {
+                    const état = Math.random() < 0.5 ? "off" : "on";
+                    états[p] = état;
 
-    // (Optionnel) Affichage console
-    console.log(états);
-  }
-</script>
+                    // Mise à jour dans le HTML (on → allumée, off → éteinte)
+                    const texte = état === "on" ? "allumée" : "éteinte";
+                    const id = "etat-" + p;
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = texte;
+                    }
+                });
 
-<script>
+                // (Optionnel) Affichage console
+                console.log(états);
+            }
+        </script>
 
-    /* ---------- fait l’appel AJAX ---------- */
-    function loadData(endpoint) {
-      fetch(endpoint)
-        .then(r => {
-          if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-          return r.json();
-        })
-        .then(data => {
-          /* ta fonction utilitaire déjà écrite */
-          generateTable(data);
-        })
-        .catch(err => console.error('Erreur de chargement :', err));
-    }
-  </script>
-<script>
-function rafraichirTable(){
-    const data = randomData();
-    generateTable(data);
-}
+        <script>
 
-/* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
-function randomData() {
-  const n = Math.floor(Math.random() * 16);            // 0-15 éléments
-  const maintenant = Date.now();
-  const unJour = 24 * 60 * 60 * 1000;
+            /* ---------- fait l’appel AJAX ---------- */
+            function loadData(endpoint) {
+                fetch(endpoint)
+                    .then(r => {
+                        if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+                        return r.json();
+                    })
+                    .then(data => {
+                        /* ta fonction utilitaire déjà écrite */
+                        generateTable(data);
+                    })
+                    .catch(err => console.error('Erreur de chargement :', err));
+            }
+        </script>
 
-  const arr = [];
-  for (let i = 0; i < n; i++) {
-    // Date aléatoire dans les 365 derniers jours
-    const offset = Math.floor(Math.random() * 365) * unJour;
-    const d = new Date(maintenant - offset);
+        <script>
+            function rafraichirTable() {
+                const data = randomData();
+                generateTable(data);
+            }
 
-    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
-    const fmt = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' })
-               + ' ' +
-               d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' }).replace(':', 'h');
+            /* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
+            function randomData() {
+                const n = Math.floor(Math.random() * 16);            // 0-15 éléments
+                const maintenant = Date.now();
+                const unJour = 24 * 60 * 60 * 1000;
 
-    arr.push({
-      date: fmt,
-      température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
-      humidité: Math.floor(Math.random() * 101)            // 0 → 100
-    });
-  }
-  return arr;
-}
+                const arr = [];
+                for (let i = 0; i < n; i++) {
+                    // Date aléatoire dans les 365 derniers jours
+                    const offset = Math.floor(Math.random() * 365) * unJour;
+                    const d = new Date(maintenant - offset);
 
-/* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
-function generateTable(data) {
-  const container = document.getElementById("table-container");
-  container.innerHTML = '';                        // réinitialiser
+                    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
+                    const fmt = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
+                        + ' ' +
+                        d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
 
-  if (!data.length) {
-    container.textContent = "Aucune donnée.";
-    return;
-  }
+                    arr.push({
+                        date: fmt,
+                        température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
+                        humidité: Math.floor(Math.random() * 101)            // 0 → 100
+                    });
+                }
+                return arr;
+            }
 
-  const table  = document.createElement("table");
-  const thead  = document.createElement("thead");
-  const tbody  = document.createElement("tbody");
+            /* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
+            function generateTable(data) {
+                const container = document.getElementById("table-container");
+                container.innerHTML = '';                        // réinitialiser
 
-  // En-têtes
-  const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
-  const headerRow = document.createElement("tr");
-  headers.forEach(label => {
-    const th = document.createElement("th");
-    th.textContent = label;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
+                if (!data.length) {
+                    container.textContent = "Aucune donnée.";
+                    return;
+                }
 
-  // Corps (au plus 10 lignes)
-  data.slice(0, 10).forEach(item => {
-    const tr = document.createElement("tr");
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+                const tbody = document.createElement("tbody");
 
-    // Date
-    const tdDate = document.createElement("td");
-    tdDate.textContent = item.date;
-    tr.appendChild(tdDate);
+                // En-têtes
+                const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
+                const headerRow = document.createElement("tr");
+                headers.forEach(label => {
+                    const th = document.createElement("th");
+                    th.textContent = label;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
 
-    // Température + unité
-    const tdTemp = document.createElement("td");
-    tdTemp.textContent = `${item.température} °C`;
-    tr.appendChild(tdTemp);
+                // Corps (au plus 10 lignes)
+                data.slice(0, 10).forEach(item => {
+                    const tr = document.createElement("tr");
 
-    // Humidité + unité
-    const tdHum  = document.createElement("td");
-    tdHum.textContent = `${item.humidité} %`;
-    tr.appendChild(tdHum);
+                    // Date
+                    const tdDate = document.createElement("td");
+                    tdDate.textContent = item.date;
+                    tr.appendChild(tdDate);
 
-    tbody.appendChild(tr);
-  });
+                    // Température + unité
+                    const tdTemp = document.createElement("td");
+                    tdTemp.textContent = `${item.température} °C`;
+                    tr.appendChild(tdTemp);
 
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.appendChild(table);
-}
+                    // Humidité + unité
+                    const tdHum = document.createElement("td");
+                    tdHum.textContent = `${item.humidité} %`;
+                    tr.appendChild(tdHum);
 
-</script>
+                    tbody.appendChild(tr);
+                });
 
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(table);
+            }
+        </script>
     </body>
 </html>

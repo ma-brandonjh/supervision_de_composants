@@ -5,146 +5,143 @@
         <meta http-equiv="refresh" content="5">
         <title>Mesure</title>
         <style>
-            *{
-    padding:0px;
-    margin:0px;
-}
+            * {
+                padding: 0px;
+                margin: 0px;
+            }
 
-header{
-    background-color: aquamarine;
-    padding:2%;
-}
+            header {
+                background-color: aquamarine;
+                padding: 2%;
+            }
 
-header ul{
-    display:flex;
-    align-content:center;
-}
+            header ul {
+                display: flex;
+                align-content: center;
+            }
 
-header ul li{
-    margin:5px;
-}
+            header ul li {
+                margin: 5px;
+            }
 
-ul{
-    display:flex;
-    text-decoration: none;
-    text-decoration-style: none;
-}
+            ul {
+                display: flex;
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
-li{
-    text-decoration: none;
-    text-decoration-style: none;   
-}
-
-
-main{
-    display:flex;
-    align-items: flex-start;
-    margin:2%;
-}
-
-.divb{
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:2%;
-    width: 150px;
-    background-color: rgb(207, 207, 207);
-}
-
-.diva{
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:1%;
-    width:40%;
-    background-color: rgba(139, 255, 255, 0.377);
-}
-
-h1{
-    display:flex;
-    justify-content:center;
-}
-
-.diva table{
-    border-radius: 8px;
-    padding:1%;
-}
-
-h3{
-    text-decoration: underline;
-    margin-top:8px;
-}
-
-h4{
-    margin-bottom:8px;
-}
-
-.divc{
-    background-color: white;
-}
-
-header ul li button{
-    width:200px;
-}
-
-header ul {
-    display:flex;
-    justify-content: center;
-}
-
-ul{
-    list-style-type:none;
-}
-
-header ul li button a{
-    text-decoration: none;
-    color:black;
-}
+            li {
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
 
-button{
-    border-radius: 8px;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:10px;
-    padding-right:10px;
-    border-color:black;
-    margin:2%;
-}
+            main {
+                display: flex;
+                align-items: flex-start;
+                margin: 2%;
+            }
 
-table{
-    border:solid;
-}
+            .divb {
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 2%;
+                width: 150px;
+                background-color: rgb(207, 207, 207);
+            }
 
-th{
-    border:solid;
-    padding:1%;
-}
+            .diva {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 1%;
+                width: 40%;
+                background-color: rgba(139, 255, 255, 0.377);
+            }
 
-footer{
-    display:flex;
-    justify-content:center;
-    align-content:center;
-}
+            h1 {
+                display: flex;
+                justify-content: center;
+            }
 
-button:hover{
-    background-color: rgb(151, 248, 248);
-    border-color:red;
-}
+            .diva table {
+                border-radius: 8px;
+                padding: 1%;
+            }
 
-.center{
-    display:flex;
-    justify-content:center;
-}
+            h3 {
+                text-decoration: underline;
+                margin-top: 8px;
+            }
 
+            h4 {
+                margin-bottom: 8px;
+            }
+
+            .divc {
+                background-color: white;
+            }
+
+            header ul li button {
+                width: 200px;
+            }
+
+            header ul {
+                display: flex;
+                justify-content: center;
+            }
+
+            ul {
+                list-style-type: none;
+            }
+
+            header ul li button a {
+                text-decoration: none;
+                color: black;
+            }
+
+
+            button {
+                border-radius: 8px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-color: black;
+                margin: 2%;
+            }
+
+            table {
+                border: solid;
+            }
+
+            th {
+                border: solid;
+                padding: 1%;
+            }
+
+            footer {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+            }
+
+            button:hover {
+                background-color: rgb(151, 248, 248);
+                border-color: red;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+            }
         </style>
         <link rel="stylesheet" href="./css/index.css">
     </head>
-
-
 
     <body>
         <header>
@@ -157,105 +154,104 @@ button:hover{
             </ul>
         </header>
 
-<hr>
+        <hr>
 
-        <main class="center"><div class="diva">
-            <h2>Journal des dernières mesures</h2><br>
+        <main class="center">
+            <div class="diva">
+                <h2>Journal des dernières mesures</h2><br>
                 <div class="divc" id="table-container"></div>
-                            <ul>
-                <li><button onclick="rafraichirTable()">Rafraichir</button></li>
-            </ul>
+                <ul>
+                    <li><button onclick="rafraichirTable()">Rafraichir</button></li>
+                </ul>
             </div>
-            </main>
+        </main>
+
+        <script>
 
 
-<script>
+            function rafraichirTable() {
+                const data = randomData();
+                generateTable(data);
+            }
 
+            /* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
+            function randomData() {
+                const n = Math.floor(Math.random() * 16);            // 0-15 éléments
+                const maintenant = Date.now();
+                const unJour = 24 * 60 * 60 * 1000;
 
-function rafraichirTable(){
-    const data = randomData();
-    generateTable(data);
-}
+                const arr = [];
+                for (let i = 0; i < n; i++) {
+                    // Date aléatoire dans les 365 derniers jours
+                    const offset = Math.floor(Math.random() * 365) * unJour;
+                    const d = new Date(maintenant - offset);
 
-/* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
-function randomData() {
-  const n = Math.floor(Math.random() * 16);            // 0-15 éléments
-  const maintenant = Date.now();
-  const unJour = 24 * 60 * 60 * 1000;
+                    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
+                    const fmt = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
+                        + ' ' +
+                        d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
 
-  const arr = [];
-  for (let i = 0; i < n; i++) {
-    // Date aléatoire dans les 365 derniers jours
-    const offset = Math.floor(Math.random() * 365) * unJour;
-    const d = new Date(maintenant - offset);
+                    arr.push({
+                        date: fmt,
+                        température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
+                        humidité: Math.floor(Math.random() * 101)            // 0 → 100
+                    });
+                }
+                return arr;
+            }
 
-    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
-    const fmt = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' })
-               + ' ' +
-               d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' }).replace(':', 'h');
+            /* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
+            function generateTable(data) {
+                const container = document.getElementById("table-container");
+                container.innerHTML = '';                        // réinitialiser
 
-    arr.push({
-      date: fmt,
-      température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
-      humidité: Math.floor(Math.random() * 101)            // 0 → 100
-    });
-  }
-  return arr;
-}
+                if (!data.length) {
+                    container.textContent = "Aucune donnée.";
+                    return;
+                }
 
-/* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
-function generateTable(data) {
-  const container = document.getElementById("table-container");
-  container.innerHTML = '';                        // réinitialiser
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+                const tbody = document.createElement("tbody");
 
-  if (!data.length) {
-    container.textContent = "Aucune donnée.";
-    return;
-  }
+                // En-têtes
+                const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
+                const headerRow = document.createElement("tr");
+                headers.forEach(label => {
+                    const th = document.createElement("th");
+                    th.textContent = label;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
 
-  const table  = document.createElement("table");
-  const thead  = document.createElement("thead");
-  const tbody  = document.createElement("tbody");
+                // Corps (au plus 10 lignes)
+                data.slice(0, 10).forEach(item => {
+                    const tr = document.createElement("tr");
 
-  // En-têtes
-  const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
-  const headerRow = document.createElement("tr");
-  headers.forEach(label => {
-    const th = document.createElement("th");
-    th.textContent = label;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
+                    // Date
+                    const tdDate = document.createElement("td");
+                    tdDate.textContent = item.date;
+                    tr.appendChild(tdDate);
 
-  // Corps (au plus 10 lignes)
-  data.slice(0, 10).forEach(item => {
-    const tr = document.createElement("tr");
+                    // Température + unité
+                    const tdTemp = document.createElement("td");
+                    tdTemp.textContent = `${item.température} °C`;
+                    tr.appendChild(tdTemp);
 
-    // Date
-    const tdDate = document.createElement("td");
-    tdDate.textContent = item.date;
-    tr.appendChild(tdDate);
+                    // Humidité + unité
+                    const tdHum = document.createElement("td");
+                    tdHum.textContent = `${item.humidité} %`;
+                    tr.appendChild(tdHum);
 
-    // Température + unité
-    const tdTemp = document.createElement("td");
-    tdTemp.textContent = `${item.température} °C`;
-    tr.appendChild(tdTemp);
+                    tbody.appendChild(tr);
+                });
 
-    // Humidité + unité
-    const tdHum  = document.createElement("td");
-    tdHum.textContent = `${item.humidité} %`;
-    tr.appendChild(tdHum);
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                container.appendChild(table);
+            }
 
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.appendChild(table);
-}
-
-</script>
-
+        </script>
 
     </body>
 </html>

@@ -5,141 +5,140 @@
         <meta http-equiv="refresh" content="5">
         <title>Commande des LEDs</title>
         <style>
-*{
-    padding:0px;
-    margin:0px;
-}
+            * {
+                padding: 0px;
+                margin: 0px;
+            }
 
-header{
-    background-color: aquamarine;
-    padding:2%;
-}
+            header {
+                background-color: aquamarine;
+                padding: 2%;
+            }
 
-header ul{
-    display:flex;
-    align-content:center;
-}
+            header ul {
+                display: flex;
+                align-content: center;
+            }
 
-header ul li{
-    margin:5px;
-}
+            header ul li {
+                margin: 5px;
+            }
 
-ul{
-    display:flex;
-    text-decoration: none;
-    text-decoration-style: none;
-}
+            ul {
+                display: flex;
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
-li{
-    text-decoration: none;
-    text-decoration-style: none;   
-}
-
-
-main{
-    display:flex;
-    align-items: flex-start;
-    margin:2%;
-}
-
-.divb{
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:2%;
-    width: 150px;
-    background-color: rgb(207, 207, 207);
-}
-
-.diva{
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    border-radius:8px;
-    border:2px solid;
-    padding:2%;
-    margin:1%;
-    width:40%;
-    background-color: rgba(139, 255, 255, 0.377);
-}
-
-h1{
-    display:flex;
-    justify-content:center;
-}
-
-.diva table{
-    border-radius: 8px;
-    padding:1%;
-}
-
-h3{
-    text-decoration: underline;
-    margin-top:8px;
-}
-
-h4{
-    margin-bottom:8px;
-}
-
-.divc{
-    background-color: white;
-}
-
-header ul li button{
-    width:200px;
-}
-
-header ul {
-    display:flex;
-    justify-content: center;
-}
-
-ul{
-    list-style-type:none;
-}
-
-header ul li button a{
-    text-decoration: none;
-    color:black;
-}
+            li {
+                text-decoration: none;
+                text-decoration-style: none;
+            }
 
 
-button{
-    border-radius: 8px;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:10px;
-    padding-right:10px;
-    border-color:black;
-    margin:2%;
-}
+            main {
+                display: flex;
+                align-items: flex-start;
+                margin: 2%;
+            }
 
-table{
-    border:solid;
-}
+            .divb {
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 2%;
+                width: 150px;
+                background-color: rgb(207, 207, 207);
+            }
 
-th{
-    border:solid;
-    padding:1%;
-}
+            .diva {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 8px;
+                border: 2px solid;
+                padding: 2%;
+                margin: 1%;
+                width: 40%;
+                background-color: rgba(139, 255, 255, 0.377);
+            }
 
-footer{
-    display:flex;
-    justify-content:center;
-    align-content:center;
-}
+            h1 {
+                display: flex;
+                justify-content: center;
+            }
 
-button:hover{
-    background-color: rgb(151, 248, 248);
-    border-color:red;
-}
+            .diva table {
+                border-radius: 8px;
+                padding: 1%;
+            }
 
-.center{
-    display:flex;
-    justify-content:center;
-}
+            h3 {
+                text-decoration: underline;
+                margin-top: 8px;
+            }
 
+            h4 {
+                margin-bottom: 8px;
+            }
+
+            .divc {
+                background-color: white;
+            }
+
+            header ul li button {
+                width: 200px;
+            }
+
+            header ul {
+                display: flex;
+                justify-content: center;
+            }
+
+            ul {
+                list-style-type: none;
+            }
+
+            header ul li button a {
+                text-decoration: none;
+                color: black;
+            }
+
+
+            button {
+                border-radius: 8px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-color: black;
+                margin: 2%;
+            }
+
+            table {
+                border: solid;
+            }
+
+            th {
+                border: solid;
+                padding: 1%;
+            }
+
+            footer {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+            }
+
+            button:hover {
+                background-color: rgb(151, 248, 248);
+                border-color: red;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+            }
         </style>
         <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
@@ -156,47 +155,45 @@ button:hover{
             </ul>
         </header>
 
-    <hr>
+        <hr>
 
-    <main class="center"><div class="diva">
-            <h2>Contrôle des LEDs</h2>
-        <div class="divb">
-            <h3>Chambre</h3>
-                <button onclick="envoyerCommande('chambre/on')">ON</button>
-                <button onclick="envoyerCommande('chambre/off')">OFF</button>
-        </div>
-        <div class="divb">
-            <h3>Salon</h3>
-                <button onclick="envoyerCommande('salon/on')">ON</button>
-                <button onclick="envoyerCommande('salon/off')">OFF</button>
-        </div>
-        <div class="divb">
-            <h3>Cuisine</h3>
-                <button onclick="envoyerCommande('cuisine/on')">ON</button>
-                <button onclick="envoyerCommande('cuisine/off')">OFF</button>
-        </div>
-            </div></main>
+        <main class="center">
+            <div class="diva">
+                <h2>Contrôle des LEDs</h2>
+                <div class="divb">
+                    <h3>Chambre</h3>
+                    <button onclick="envoyerCommande('chambre/on')">ON</button>
+                    <button onclick="envoyerCommande('chambre/off')">OFF</button>
+                </div>
+                <div class="divb">
+                    <h3>Salon</h3>
+                    <button onclick="envoyerCommande('salon/on')">ON</button>
+                    <button onclick="envoyerCommande('salon/off')">OFF</button>
+                </div>
+                <div class="divb">
+                    <h3>Cuisine</h3>
+                    <button onclick="envoyerCommande('cuisine/on')">ON</button>
+                    <button onclick="envoyerCommande('cuisine/off')">OFF</button>
+                </div>
+            </div>
+        </main>
 
-<script>
+        <script>
+            function envoyerCommande(commande) {
+                fetch('/led', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ led: commande })
+                })
+                    .then(res => {
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        return res.text();
+                    })
+                    .then(txt => console.log('Réponse du serveur :', txt))
+                    .catch(err => console.error('Erreur POST :', err));
+            }
 
-        function envoyerCommande(commande) {
-  fetch('/led', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ led: commande })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.text();
-  })
-  .then(txt => console.log('Réponse du serveur :', txt))
-  .catch(err => console.error('Erreur POST :', err));
-}
-
-</script>
+        </script>
 
     </body>
-
-
-
 </html>
