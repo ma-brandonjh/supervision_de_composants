@@ -133,6 +133,11 @@ button:hover{
     background-color: rgb(151, 248, 248);
     border-color:red;
 }
+.center{
+    display:flex;
+    justify-content:center;
+}
+
         </style>
         <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
@@ -144,14 +149,55 @@ button:hover{
         <header>
             <h1>Section --- États des LEDs</h1>
             <ul>
-                <li><button><a href="/">Accueil</a></button></li>
-                <li><button><a href="/mesure">Température et humidité</a></button></li>
-                <li><button><a href="/led-cmd">Contrôle des LEDs</a></button></li>
-                <li><button><a href="/led-state">États des LEDs</a></button></li>
+                <li><a href="/"><button>Accueil</button></a></li>
+                <li><a href="/mesure"><button>Température et humidité</button></a></li>
+                <li><a href="/led-state"><button>États des LEDs</button></a></li>
+                <li><a href="/led-cmd"><button>Contrôle des LEDs</button></a></li>
             </ul>
         </header>
 
 <hr>
+
+
+
+    <main class="center"><div class="diva">
+            <h2>État des LEDs</h2>
+            <h3>LED de la chambre:</h3>
+                <h4 id="etat-chambre">allumée</h4>
+            <h3>LED du salon:</h3>
+                <h4 id="etat-salon">éteinte</h4>
+            <h3>LED de la cuisine:</h3>
+                <h4 id="etat-cuisine">éteinte</h4>
+            <ul>
+                <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
+            </ul>
+            </div></main>
+
+
+<script>
+  function rafraichirJSON() {
+    const pièces = ["chambre", "salon", "cuisine"];
+    const états = {};
+
+    pièces.forEach(p => {
+      const état = Math.random() < 0.5 ? "off" : "on";
+      états[p] = état;
+
+      // Mise à jour dans le HTML (on → allumée, off → éteinte)
+      const texte = état === "on" ? "allumée" : "éteinte";
+      const id = "etat-" + p;
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = texte;
+      }
+    });
+
+    // (Optionnel) Affichage console
+    console.log(états);
+  }
+</script>
+
+
 
     </body>
 </html>

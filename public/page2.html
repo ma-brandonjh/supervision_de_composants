@@ -134,6 +134,11 @@ button:hover{
     border-color:red;
 }
 
+.center{
+    display:flex;
+    justify-content:center;
+}
+
         </style>
         <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
@@ -141,18 +146,53 @@ button:hover{
 
     <body>
         <header>
-            <h1>Section --- Copntrôle des LEDs</h1>
+            <h1>Section --- Contrôle des LEDs</h1>
             <ul>
-                <li><button><a href="/">Accueil</a></button></li>
-                <li><button><a href="/mesure">Température et humidité</a></button></li>
-                <li><button><a href="/led-cmd">Contrôle des LEDs</a></button></li>
-                <li><button><a href="/led-state">États des LEDs</a></button></li>
+                <li><a href="/"><button>Accueil</button></a></li>
+                <li><a href="/mesure"><button>Température et humidité</button></a></li>
+                <li><a href="/led-state"><button>États des LEDs</button></a></li>
+                <li><a href="/led-cmd"><button>Contrôle des LEDs</button></a></li>
             </ul>
         </header>
 
     <hr>
 
-    <main></main>
+    <main class="center"><div class="diva">
+            <h2>Contrôle des LEDs</h2>
+        <div class="divb">
+            <h3>Chambre</h3>
+                <button onclick="envoyerCommande('chambre/on')">ON</button>
+                <button onclick="envoyerCommande('chambre/off')">OFF</button>
+        </div>
+        <div class="divb">
+            <h3>Salon</h3>
+                <button onclick="envoyerCommande('salon/on')">ON</button>
+                <button onclick="envoyerCommande('salon/off')">OFF</button>
+        </div>
+        <div class="divb">
+            <h3>Cuisine</h3>
+                <button onclick="envoyerCommande('cuisine/on')">ON</button>
+                <button onclick="envoyerCommande('cuisine/off')">OFF</button>
+        </div>
+            </div></main>
+
+<script>
+
+        function envoyerCommande(commande) {
+  fetch('/led', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ led: commande })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.text();
+  })
+  .then(txt => console.log('Réponse du serveur :', txt))
+  .catch(err => console.error('Erreur POST :', err));
+}
+
+</script>
 
     </body>
 

@@ -135,16 +135,21 @@ button:hover{
     background-color: rgb(151, 248, 248);
     border-color:red;
 }
+
+.center{
+    display:flex;
+    justify-content:center;
+}
         </style>
     </head>
     <body>
         <header>
             <h1>Tableau de bord --- Interface de contrôle des iots</h1>
             <ul>
-                <li><button><a href="/">Accueil</a></button></li>
-                <li><button><a href="/mesure">Température et humidité</a></button></li>
-                <li><button><a href="/led-cmd">Contrôle des LEDs</a></button></li>
-                <li><button><a href="/led-state">États des LEDs</a></button></li>
+                <li><a href="/"><button>Accueil</button></a></li>
+                <li><a href="/mesure"><button>Température et humidité</button></a></li>
+                <li><a href="/led-state"><button>États des LEDs</button></a></li>
+                <li><a href="/led-cmd"><button>Contrôle des LEDs</button></a></li>
             </ul>
         </header>
 
@@ -154,18 +159,21 @@ button:hover{
             <div class="diva">
             <h2>Journal des dernières mesures</h2><br>
                 <div class="divc" id="table-container"></div>
+                            <ul>
+                <li><button onclick="loadData">Rafraichir</button></li>
+            </ul>
             </div>
             <hr>
             <div class="diva">
             <h2>État des LEDs</h2>
             <h3>LED de la chambre:</h3>
-                <h4>allumée</h4>
+                <h4 id="etat-chambre">allumée</h4>
             <h3>LED du salon:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-salon">éteinte</h4>
             <h3>LED de la cuisine:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-cuisine">éteinte</h4>
             <ul>
-                <li><button>Rafraichir</button></li>
+                <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
             </ul>
             </div>
             <hr>
@@ -190,24 +198,11 @@ button:hover{
         </main>
         <nav></nav>
 
-<hr>
-
-        <footer>
-            <h4>Développement uniquement:</h4>
-            <button>Get DHT11 data</button>
-            <button>Test 2</button>
-            <button>Test 3</button>
-            <form action="/led" method="POST">
-            <input type="hidden" name="led" value="rouge">
-            <input type="hidden" name="etat" value="on">
-            <button type="submit">Allumer</button>
-            <button onclick="getStatus()">Obtenir le status des IoTs</button>
-            </form>
-        </footer>
     </body>
 
     <script>
         const data = [ //pour generateTable
+            {"time":"13 mai 2025 22h35", "température":20, "humidité":56},
             {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56},
             {"time":"13 mai 2025 22h35", "température":12.4, "humidité":56}
         ]
@@ -242,7 +237,7 @@ button:hover{
             const tbody = document.createElement("tbody");
 
             // En tête
-            const headers = Object.keys(data[0]);
+            const headers = ['Time', 'Température', 'Humidité'];
             const headerRow = document.createElement("tr");
             headers.forEach(key =>{
                 const th = document.createElement("th");
@@ -271,28 +266,42 @@ button:hover{
     </script>
 
 <script>
-function envoyerCommande(commande) {
-    fetch('/led', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ led: commande })
-    })
-    .then(res => res.text())
-    .then(data => console.log("Réponse du serveur :", data))
-    .catch(err => console.error("Erreur :", err));
-}
+  function rafraichirJSON() {
+    const pièces = ["chambre", "salon", "cuisine"];
+    const états = {};
+
+    pièces.forEach(p => {
+      const état = Math.random() < 0.5 ? "off" : "on";
+      états[p] = état;
+
+      // Mise à jour dans le HTML (on → allumée, off → éteinte)
+      const texte = état === "on" ? "allumée" : "éteinte";
+      const id = "etat-" + p;
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = texte;
+      }
+    });
+
+    // (Optionnel) Affichage console
+    console.log(états);
+  }
 </script>
+
 <script>
-    function getStatus() {
-      fetch('localhost:3000')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('resultat').innerText = JSON.stringify(data, null, 2);
+
+    /* ---------- fait l’appel AJAX ---------- */
+    function loadData(endpoint) {
+      fetch(endpoint)
+        .then(r => {
+          if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+          return r.json();
         })
-        .catch(error => {
-          console.error('Erreur :', error);
-          document.getElementById('resultat').innerText = 'Erreur lors de la requête';
-        });
+        .then(data => {
+          /* ta fonction utilitaire déjà écrite */
+          generateTable(data);
+        })
+        .catch(err => console.error('Erreur de chargement :', err));
     }
-</script>
+  </script>
 </html>
