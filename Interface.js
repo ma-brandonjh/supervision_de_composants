@@ -36,6 +36,23 @@ const serveur = http.createServer((req, res) => {
         });
     }
 
+
+  // Serve le fichier CSS (à la racine)
+  else if (req.url === '/index.css') {
+    const filePath = path.join(__dirname, 'index.css');
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        res.writeHead(404);
+        res.end('CSS introuvable');
+      } else {
+        res.writeHead(200, { 'Content-Type': 'text/css; charset=UTF-8' });
+        res.end(data);
+      }
+    });
+  }
+
+
+
     else if (req.method === 'POST' && req.url === '/led') {
         let body = '';
         req.on('data', chunk => body += chunk);

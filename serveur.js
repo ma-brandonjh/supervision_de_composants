@@ -134,4 +134,5 @@ const server = http.createServer((req, res) => {
 const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`Serveur en écoute sur le port ${PORT}`);
+    console.log(`http://localhost:${PORT}`)
 });
