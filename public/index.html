@@ -160,7 +160,7 @@ button:hover{
             <h2>Journal des dernières mesures</h2><br>
                 <div class="divc" id="table-container"></div>
                             <ul>
-                <li><button onclick="loadData">Rafraichir</button></li>
+                <li><button onclick="rafraichirTable()">Rafraichir</button></li>
             </ul>
             </div>
             <hr>
@@ -198,7 +198,7 @@ button:hover{
         </main>
         <nav></nav>
 
-    </body>
+
 
     <script>
         const data = [ //pour generateTable
@@ -304,4 +304,90 @@ button:hover{
         .catch(err => console.error('Erreur de chargement :', err));
     }
   </script>
+<script>
+function rafraichirTable(){
+    const data = randomData();
+    generateTable(data);
+}
+
+/* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
+function randomData() {
+  const n = Math.floor(Math.random() * 16);            // 0-15 éléments
+  const maintenant = Date.now();
+  const unJour = 24 * 60 * 60 * 1000;
+
+  const arr = [];
+  for (let i = 0; i < n; i++) {
+    // Date aléatoire dans les 365 derniers jours
+    const offset = Math.floor(Math.random() * 365) * unJour;
+    const d = new Date(maintenant - offset);
+
+    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
+    const fmt = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' })
+               + ' ' +
+               d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' }).replace(':', 'h');
+
+    arr.push({
+      date: fmt,
+      température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
+      humidité: Math.floor(Math.random() * 101)            // 0 → 100
+    });
+  }
+  return arr;
+}
+
+/* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
+function generateTable(data) {
+  const container = document.getElementById("table-container");
+  container.innerHTML = '';                        // réinitialiser
+
+  if (!data.length) {
+    container.textContent = "Aucune donnée.";
+    return;
+  }
+
+  const table  = document.createElement("table");
+  const thead  = document.createElement("thead");
+  const tbody  = document.createElement("tbody");
+
+  // En-têtes
+  const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
+  const headerRow = document.createElement("tr");
+  headers.forEach(label => {
+    const th = document.createElement("th");
+    th.textContent = label;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  // Corps (au plus 10 lignes)
+  data.slice(0, 10).forEach(item => {
+    const tr = document.createElement("tr");
+
+    // Date
+    const tdDate = document.createElement("td");
+    tdDate.textContent = item.date;
+    tr.appendChild(tdDate);
+
+    // Température + unité
+    const tdTemp = document.createElement("td");
+    tdTemp.textContent = `${item.température} °C`;
+    tr.appendChild(tdTemp);
+
+    // Humidité + unité
+    const tdHum  = document.createElement("td");
+    tdHum.textContent = `${item.humidité} %`;
+    tr.appendChild(tdHum);
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+</script>
+
+    </body>
 </html>
