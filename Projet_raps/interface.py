@@ -57,7 +57,7 @@ def dessiner_interface():
         hum = derniere_mesure.get("humidite", "--")
         date = derniere_mesure.get("date", "")
         
-        texte_mesure = petite_font.render(f"Temp�rature : {temp} �C | Humidit� : {hum} %", True, BLEU)
+        texte_mesure = petite_font.render(f"Temperature : {temp} C | Humidite : {hum} %", True, BLEU)
         texte_date = petite_font.render(f"Date : {date}", True, NOIR)
 
         fenetre.blit(texte_mesure, (50, 280))
