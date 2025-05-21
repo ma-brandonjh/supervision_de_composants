@@ -1,5 +1,5 @@
 {
-  "chambre": "on",
+  "chambre": "off",
   "salon": "off",
-  "cuisine": "on"
+  "cuisine": "off"
 }

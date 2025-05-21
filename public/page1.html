@@ -133,6 +133,12 @@ button:hover{
     background-color: rgb(151, 248, 248);
     border-color:red;
 }
+
+.center{
+    display:flex;
+    justify-content:center;
+}
+
         </style>
         <link rel="stylesheet" href="./css/index.css">
         <meta http-equiv="refresh" content="5">
@@ -144,17 +150,23 @@ button:hover{
         <header>
             <h1>Section --- Température et humidité</h1>
             <ul>
-                <li><button><a href="/">Accueil</a></button></li>
-                <li><button><a href="/mesure">Température et humidité</a></button></li>
-                <li><button><a href="/led-cmd">Contrôle des LEDs</a></button></li>
-                <li><button><a href="/led-state">États des LEDs</a></button></li>
+                <li><a href="/"><button>Accueil</button></a></li>
+                <li><a href="/mesure"><button>Température et humidité</button></a></li>
+                <li><a href="/led-state"><button>États des LEDs</button></a></li>
+                <li><a href="/led-cmd"><button>Contrôle des LEDs</button></a></li>
             </ul>
         </header>
 
+<hr>
 
-    <hr>
-
-        <main></main>
+        <main class="center"><div class="diva">
+            <h2>Journal des dernières mesures</h2><br>
+                <div class="divc" id="table-container"></div>
+                            <ul>
+                <li><button onclick="loadData">Rafraichir</button></li>
+            </ul>
+            </div>
+            </main>
 
     </body>
 </html>
