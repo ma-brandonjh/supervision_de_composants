@@ -3,7 +3,7 @@ const fs = require('fs');
 const url = require('url');
 const path = require('path');
 
-function errorMessage(message){
+function errorMessage(res, message){
     res.writeHead(400, { 'Content-Type': 'text/plain' });
     res.end(message)
 }
@@ -32,6 +32,18 @@ function writeDonnees(entry, key){
     fs.writeFileSync('./Template_JSON/JSON-MESURES.json', JSON.stringify(data, null, 2));
 }
 
+function getFilePath(filePath, res){
+    fs.readFile(filePath, (err, data) => {
+            if (err) {
+                res.writeHead(500);
+                res.end('Erreur serveur');
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(data);
+        });
+}
+
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const direction = parsedUrl.pathname
@@ -52,13 +64,14 @@ const server = http.createServer((req, res) => {
                     try{
                         console.log('Données POST:', body);
                         const data = JSON.parse(body);
-                        const key = Object.keys(data)[0]
-                        const value = data[key]
+                        const dictionary = data['led'].split('/')
+                        const key = dictionary[0]
+                        const value = dictionary[1]
                         writeLed(key, value)
-                        res.writeHead(201);
+                        res.writeHead(201, { 'Content-Type': 'application/json' });
                         res.end(`Données reçues : ${body}`);
                     } catch (err){
-                        errorMessage('Données invalides');
+                        errorMessage(res, 'Données invalides');
                     }
                 });
                 break;
@@ -78,29 +91,33 @@ const server = http.createServer((req, res) => {
                     res.writeHead(201, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify(data));
                 } catch (err) {
-                    errorMessage('Données invalides');
+                    errorMessage(res, 'Données invalides');
                 }
                 });
                 break;
             default:
-                errorMessage('Ce URL n\'existe pas');
+                errorMessage(res, 'Ce URL n\'existe pas');
                 break;
         }
     } else if (method === "GET"){
         switch (direction){
-            // case '/':
-            // case '/index.html':
-            //     filePath = path.join(__dirname, 'public', 'index.html');
-            //     break;
-            // case '/mesure':
-            //     filePath = path.join(__dirname, 'public', 'page1.html');
-            //     break;
-            // case 'led-cmd':
-            //     filePath = path.join(__dirname, 'public', 'page2.html');
-            //     break;
-            // case '/led-state':
-            //     filePath = path.join(__dirname, 'public', 'page3.html');
-            //     break;
+            case '/':
+            case '/index.html':
+                filePath = path.join(__dirname, 'public', 'index.html');
+                getFilePath(filePath, res);
+                break;
+            case '/mesure':
+                filePath = path.join(__dirname, 'public', 'page1.html');
+                getFilePath(filePath, res);
+                break;
+            case '/led-cmd':
+                filePath = path.join(__dirname, 'public', 'page2.html');
+                getFilePath(filePath, res);
+                break;
+            case '/led-state':
+                filePath = path.join(__dirname, 'public', 'page3.html');
+                getFilePath(filePath, res);
+                break;
             case '/mesures':
                     const mesures = readJsonFile('./Template_JSON/JSON-MESURES.json');
                     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -112,21 +129,11 @@ const server = http.createServer((req, res) => {
                     res.end(JSON.stringify(leds))
                 break;
             default:
-                errorMessage('Ce URL n\'existe pas');
+                errorMessage(res, 'Ce URL n\'existe pas');
                 break;
         }
-
-        // fs.readFile(filePath, (err, data) => {
-        //             if (err) {
-        //                 res.writeHead(500);
-        //                 res.end('Erreur serveur');
-        //                 return;
-        //             }
-        //             res.writeHead(200, { 'Content-Type': 'text/html' });
-        //             res.end(data);
-        // });
     } else {
-        errorMessage('Cette fonction n\'est pas disponible');
+        errorMessage(res, 'Cette fonction n\'est pas disponible');
     }
 
 });
