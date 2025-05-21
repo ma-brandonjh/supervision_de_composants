@@ -1,9 +1,7 @@
-import lgpio
-import atexit  # Pour executer automatiquement a la fermeture
+import RPi.GPIO as GPIO
+import atexit
 
-# Ouvre le chip GPIO 0
-chip = lgpio.gpiochip_open(0)
-
+GPIO.setmode(GPIO.BCM)
 
 leds = {
     "chambre": 17,
@@ -11,27 +9,28 @@ leds = {
     "cuisine": 22
 }
 
-# Configure chaque pin comme sortie
+
 for pin in leds.values():
-    lgpio.gpio_claim_output(chip, pin)
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)  
 
 def appliquer_ordres(ordres):
     for nom, etat in ordres.items():
         pin = leds.get(nom)
         if pin is not None:
             if etat == "ON":
-                lgpio.gpio_write(chip, pin, 1)
+                GPIO.output(pin, GPIO.HIGH)
             else:
-                lgpio.gpio_write(chip, pin, 0)
+                GPIO.output(pin, GPIO.LOW)
 
 def eteindre_toutes_les_leds():
     for pin in leds.values():
-        lgpio.gpio_write(chip, pin, 0)
+        GPIO.output(pin, GPIO.LOW)
 
 def fermer_gpio():
-    eteindre_toutes_les_leds()  
-    lgpio.gpiochip_close(chip)
-    print("?? Connexion GPIO fermre proprement.")
+    eteindre_toutes_les_leds()
+    GPIO.cleanup()
+    print(" GPIO nettoye et LEDs eteintes.")
 
-# Enregistre la fonction de fermeture a excuter automatiquement a la fin
+# Nettoyage auto  la fin du programme
 atexit.register(fermer_gpio)
