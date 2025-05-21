@@ -147,7 +147,7 @@ button:hover{
 
     <body>
         <header>
-            <h1>Section --- Contrôle des LEDs</h1>
+            <h1>Section --- États des LEDs</h1>
             <ul>
                 <li><a href="/"><button>Accueil</button></a></li>
                 <li><a href="/mesure"><button>Température et humidité</button></a></li>
@@ -163,15 +163,41 @@ button:hover{
     <main class="center"><div class="diva">
             <h2>État des LEDs</h2>
             <h3>LED de la chambre:</h3>
-                <h4>allumée</h4>
+                <h4 id="etat-chambre">allumée</h4>
             <h3>LED du salon:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-salon">éteinte</h4>
             <h3>LED de la cuisine:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-cuisine">éteinte</h4>
             <ul>
-                <li><button onclick="generateTable">Rafraichir</button></li>
+                <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
             </ul>
             </div></main>
+
+
+<script>
+  function rafraichirJSON() {
+    const pièces = ["chambre", "salon", "cuisine"];
+    const états = {};
+
+    pièces.forEach(p => {
+      const état = Math.random() < 0.5 ? "off" : "on";
+      états[p] = état;
+
+      // Mise à jour dans le HTML (on → allumée, off → éteinte)
+      const texte = état === "on" ? "allumée" : "éteinte";
+      const id = "etat-" + p;
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = texte;
+      }
+    });
+
+    // (Optionnel) Affichage console
+    console.log(états);
+  }
+</script>
+
+
 
     </body>
 </html>

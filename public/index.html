@@ -167,13 +167,13 @@ button:hover{
             <div class="diva">
             <h2>État des LEDs</h2>
             <h3>LED de la chambre:</h3>
-                <h4>allumée</h4>
+                <h4 id="etat-chambre">allumée</h4>
             <h3>LED du salon:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-salon">éteinte</h4>
             <h3>LED de la cuisine:</h3>
-                <h4>éteinte</h4>
+                <h4 id="etat-cuisine">éteinte</h4>
             <ul>
-                <li><button onclick="generateTable">Rafraichir</button></li>
+                <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
             </ul>
             </div>
             <hr>
@@ -198,19 +198,6 @@ button:hover{
         </main>
         <nav></nav>
 
-<hr>
-
-        <footer>
-            <h4>Développement uniquement:</h4>
-            <button>Get DHT11 data</button>
-            <button>Test 2</button>
-            <button>Test 3</button>
-            <form action="/led" method="POST">
-            <input type="hidden" name="led" value="rouge">
-            <input type="hidden" name="etat" value="on">
-            <button type="submit">Allumer</button>
-            </form>
-        </footer>
     </body>
 
     <script>
@@ -277,6 +264,29 @@ button:hover{
   generateTable(data);
 
     </script>
+
+<script>
+  function rafraichirJSON() {
+    const pièces = ["chambre", "salon", "cuisine"];
+    const états = {};
+
+    pièces.forEach(p => {
+      const état = Math.random() < 0.5 ? "off" : "on";
+      états[p] = état;
+
+      // Mise à jour dans le HTML (on → allumée, off → éteinte)
+      const texte = état === "on" ? "allumée" : "éteinte";
+      const id = "etat-" + p;
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = texte;
+      }
+    });
+
+    // (Optionnel) Affichage console
+    console.log(états);
+  }
+</script>
 
 <script>
 

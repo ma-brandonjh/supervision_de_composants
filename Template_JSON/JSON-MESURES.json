@@ -17,8 +17,8 @@
     }
   ],
   "led": {
-    "chambre": "off",
-    "salon": "off",
-    "cuisine": "off"
+    "chambre": "on",
+    "salon": "on",
+    "cuisine": "on"
   }
 }
