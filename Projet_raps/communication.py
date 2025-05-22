@@ -1,7 +1,7 @@
 import requests
 
 # Adresse du serveur (modifie l'IP et port selon ton reseau)
-SERVER_URL = "http://192.168.4.36:3000"
+SERVER_URL = "http://192.168.x.x:3000"
 
 def envoyer_mesures(mesures):
     try:
