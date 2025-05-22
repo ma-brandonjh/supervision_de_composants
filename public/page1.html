@@ -58,7 +58,7 @@
                 border: 2px solid;
                 padding: 2%;
                 margin: 1%;
-                width: 40%;
+                width: 60%;
                 background-color: rgba(139, 255, 255, 0.377);
             }
 
@@ -67,10 +67,7 @@
                 justify-content: center;
             }
 
-            .diva table {
-                border-radius: 8px;
-                padding: 1%;
-            }
+
 
             h3 {
                 text-decoration: underline;
@@ -84,6 +81,28 @@
             .divc {
                 background-color: white;
             }
+
+            table {
+                border-collapse: collapse;
+                width: 80%;
+                margin: 20px auto;
+                font-family: Arial, sans-serif;
+            }
+
+            th, td {
+                border: 1px solid black;
+                padding: 10px;
+                text-align: center;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            th {
+                background-color: #bde7ff;
+            }
+
 
             header ul li button {
                 width: 200px;
@@ -112,15 +131,6 @@
                 padding-right: 10px;
                 border-color: black;
                 margin: 2%;
-            }
-
-            table {
-                border: solid;
-            }
-
-            th {
-                border: solid;
-                padding: 1%;
             }
 
             footer {
@@ -163,92 +173,72 @@
             </div>
         </main>
 
-        <script>
+<script>
+async function obtenirEtats(){
+    let etats={},mesures=[];
+    try{
+        const r=await fetch('/mesures');
+        if(!r.ok)throw new Error('HTTP '+r.status);
+        const data=await r.json();
+        etats=data.led;
+        mesures=data.dht;
+    }catch(e){
+        console.warn(e);
+    }
+    const tableData=mesures.slice(0,10).map(m=>({
+        date:new Date(m.time).toLocaleString('fr-CA'),
+        température:m.temperature.toFixed(1),
+        humidité:m.humidity
+    }));
+    generateTable(tableData);
+    for(const piece in etats){
+        const el=document.getElementById('etat-'+piece);
+        if(el)el.textContent=etats[piece]==='on'?'allumée':'éteinte';
+    }
+}
 
+function generateTable(data){
+    const container=document.getElementById('table-container');
+    container.innerHTML='';
+    if(!data.length){container.textContent='Aucune donnée.';return;}
+    const table=document.createElement('table');
+    const thead=document.createElement('thead');
+    const tbody=document.createElement('tbody');
 
-            function rafraichirTable() {
-                const data = randomData();
-                generateTable(data);
-            }
+    const headerRow=document.createElement('tr');
+    ['Date','Température (°C)','Humidité (%)'].forEach(h=>{
+        const th=document.createElement('th');
+        th.textContent=h;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
 
-            /* ----------- 1) Génère un tableau aléatoire (0-15 entrées) ---------- */
-            function randomData() {
-                const n = Math.floor(Math.random() * 16);            // 0-15 éléments
-                const maintenant = Date.now();
-                const unJour = 24 * 60 * 60 * 1000;
+    data.forEach(({date,température,humidité})=>{
+        const tr=document.createElement('tr');
 
-                const arr = [];
-                for (let i = 0; i < n; i++) {
-                    // Date aléatoire dans les 365 derniers jours
-                    const offset = Math.floor(Math.random() * 365) * unJour;
-                    const d = new Date(maintenant - offset);
+        const tdDate=document.createElement('td');
+        tdDate.textContent=date;
+        tr.appendChild(tdDate);
 
-                    // Format "DD MMM YYYY HHhMM" (ex. 13 mai 2025 22h35)
-                    const fmt = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
-                        + ' ' +
-                        d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h');
+        const tdTemp=document.createElement('td');
+        tdTemp.textContent=température+' °C';
+        tr.appendChild(tdTemp);
 
-                    arr.push({
-                        date: fmt,
-                        température: (Math.random() * 55 - 20).toFixed(1),   // -20 → +35
-                        humidité: Math.floor(Math.random() * 101)            // 0 → 100
-                    });
-                }
-                return arr;
-            }
+        const tdHum=document.createElement('td');
+        tdHum.textContent=humidité+' %';
+        tr.appendChild(tdHum);
 
-            /* ----------- 2) Construit le tableau (max 10 lignes) ---------------- */
-            function generateTable(data) {
-                const container = document.getElementById("table-container");
-                container.innerHTML = '';                        // réinitialiser
+        tbody.appendChild(tr);
+    });
 
-                if (!data.length) {
-                    container.textContent = "Aucune donnée.";
-                    return;
-                }
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    container.appendChild(table);
+}
+</script>
 
-                const table = document.createElement("table");
-                const thead = document.createElement("thead");
-                const tbody = document.createElement("tbody");
+    <script>obtenirEtats()</script>
 
-                // En-têtes
-                const headers = ['Date', 'Température (°C)', 'Humidité (%)'];
-                const headerRow = document.createElement("tr");
-                headers.forEach(label => {
-                    const th = document.createElement("th");
-                    th.textContent = label;
-                    headerRow.appendChild(th);
-                });
-                thead.appendChild(headerRow);
-
-                // Corps (au plus 10 lignes)
-                data.slice(0, 10).forEach(item => {
-                    const tr = document.createElement("tr");
-
-                    // Date
-                    const tdDate = document.createElement("td");
-                    tdDate.textContent = item.date;
-                    tr.appendChild(tdDate);
-
-                    // Température + unité
-                    const tdTemp = document.createElement("td");
-                    tdTemp.textContent = `${item.température} °C`;
-                    tr.appendChild(tdTemp);
-
-                    // Humidité + unité
-                    const tdHum = document.createElement("td");
-                    tdHum.textContent = `${item.humidité} %`;
-                    tr.appendChild(tdHum);
-
-                    tbody.appendChild(tr);
-                });
-
-                table.appendChild(thead);
-                table.appendChild(tbody);
-                container.appendChild(table);
-            }
-
-        </script>
 
     </body>
 </html>

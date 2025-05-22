@@ -161,44 +161,86 @@
             <div class="diva">
                 <h2>État des LEDs</h2>
                 <h3>LED de la chambre:</h3>
-                <h4 id="etat-chambre">allumée</h4>
+                <h4 id="etat-chambre">en vérification...</h4>
                 <h3>LED du salon:</h3>
-                <h4 id="etat-salon">éteinte</h4>
+                <h4 id="etat-salon">en vérification...</h4>
                 <h3>LED de la cuisine:</h3>
-                <h4 id="etat-cuisine">éteinte</h4>
+                <h4 id="etat-cuisine">en vérification...</h4>
             </div>
         </main>
 
-            <script>
-                async function obtenirEtats () {
-                    let etats;
+<script>
+async function obtenirEtats(){
+    let etats = {}, mesures = [];
+    try {
+        const r = await fetch('/mesures');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        etats = data.led;
+        mesures = data.dht;
+    } catch (e) {
+        console.warn(e);
+    }
 
-                    try {
-                        const reponse = await fetch('/mesures'); // requête vers ton endpoint
-                        if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
-                        const data = await reponse.json();       // on récupère tout le JSON
-                        etats = data.led;                        // on extrait juste la section "led"
-                    } catch (err) {
-                        console.warn('Fetch KO → données fictives', err);
-                        etats = {
-                            chambre : Math.random() < 0.5 ? 'on' : 'off',
-                            salon   : Math.random() < 0.5 ? 'on' : 'off',
-                            cuisine : Math.random() < 0.5 ? 'on' : 'off'
-                        };
-                    }
+    const tableData = mesures.slice(0, 10).map(m => ({
+        date: new Date(m.time).toLocaleString('fr-CA'),
+        température: m.temperature.toFixed(1),
+        humidité: m.humidity
+    }));
 
-                    // Mise à jour du DOM
-                    for (const piece in etats) {
-                        const etat = etats[piece];
-                        const texte = etat === "on" ? "allumée" : "éteinte";
-                        const id = "etat-" + piece;
-                        const element = document.getElementById(id);
-                        if (element) {
-                            element.textContent = texte;
-                        }
-                    }
-                }
+    const container = document.getElementById('table-container');
+    if (container) generateTable(tableData);
 
-            </script>
+    for (const piece in etats) {
+        const el = document.getElementById('etat-' + piece);
+        if (el) el.textContent = etats[piece] === 'on' ? 'allumée' : 'éteinte';
+    }
+}
+
+function generateTable(data){
+    const container = document.getElementById('table-container');
+    container.innerHTML = '';
+    if (!data.length) {
+        container.textContent = 'Aucune donnée.';
+        return;
+    }
+
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+
+    const headerRow = document.createElement('tr');
+    ['Date', 'Température (°C)', 'Humidité (%)'].forEach(h => {
+        const th = document.createElement('th');
+        th.textContent = h;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    data.forEach(({date, température, humidité}) => {
+        const tr = document.createElement('tr');
+
+        const tdDate = document.createElement('td');
+        tdDate.textContent = date;
+        tr.appendChild(tdDate);
+
+        const tdTemp = document.createElement('td');
+        tdTemp.textContent = température + ' °C';
+        tr.appendChild(tdTemp);
+
+        const tdHum = document.createElement('td');
+        tdHum.textContent = humidité + ' %';
+        tr.appendChild(tdHum);
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    container.appendChild(table);
+}
+</script>
+
+        <script>obtenirEtats()</script>
     </body>
 </html>

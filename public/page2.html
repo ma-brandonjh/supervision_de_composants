@@ -178,22 +178,70 @@
             </div>
         </main>
 
-        <script>
-            function envoyerCommande(commande) {
-                fetch('/led', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ led: commande })
-                })
-                    .then(res => {
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                        return res.text();
-                    })
-                    .then(txt => console.log('Réponse du serveur :', txt))
-                    .catch(err => console.error('Erreur POST :', err));
-            }
+<script>
+async function obtenirEtats(){
+    let etats={},mesures=[];
+    try{
+        const r=await fetch('/mesures');
+        if(!r.ok)throw new Error('HTTP '+r.status);
+        const data=await r.json();
+        etats=data.led;
+        mesures=data.dht;
+    }catch(e){
+        console.warn(e);
+    }
+    const tableData=mesures.slice(0,10).map(m=>({
+        date:new Date(m.time).toLocaleString('fr-CA'),
+        température:m.temperature.toFixed(1),
+        humidité:m.humidity
+    }));
+    generateTable(tableData);
+    for(const piece in etats){
+        const el=document.getElementById('etat-'+piece);
+        if(el)el.textContent=etats[piece]==='on'?'allumée':'éteinte';
+    }
+}
 
-        </script>
+function generateTable(data){
+    const container=document.getElementById('table-container');
+    container.innerHTML='';
+    if(!data.length){container.textContent='Aucune donnée.';return;}
+    const table=document.createElement('table');
+    const thead=document.createElement('thead');
+    const tbody=document.createElement('tbody');
 
+    const headerRow=document.createElement('tr');
+    ['Date','Température (°C)','Humidité (%)'].forEach(h=>{
+        const th=document.createElement('th');
+        th.textContent=h;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    data.forEach(({date,température,humidité})=>{
+        const tr=document.createElement('tr');
+
+        const tdDate=document.createElement('td');
+        tdDate.textContent=date;
+        tr.appendChild(tdDate);
+
+        const tdTemp=document.createElement('td');
+        tdTemp.textContent=température+' °C';
+        tr.appendChild(tdTemp);
+
+        const tdHum=document.createElement('td');
+        tdHum.textContent=humidité+' %';
+        tr.appendChild(tdHum);
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    container.appendChild(table);
+}
+</script>
+
+        <script>obtenirEtats()</script>
     </body>
 </html>
