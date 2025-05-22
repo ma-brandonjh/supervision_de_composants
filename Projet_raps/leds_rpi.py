@@ -17,7 +17,6 @@ class LED_RPi():
     def appliquer_ordres(self, ordres):
         for nom, etat in ordres.items():
             pin = self.leds.get(nom)
-            print(pin, etat)        
             if pin is not None:
                 if etat == "on":
                     GPIO.output(pin, GPIO.HIGH)
