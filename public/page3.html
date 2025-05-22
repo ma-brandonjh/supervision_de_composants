@@ -172,31 +172,36 @@
             </div>
         </main>
 
- <script>
-        async function obtenirEtats () {
-        let etats;
+            <script>
+                async function obtenirEtats () {
+                    let etats;
 
-        try {
-            const reponse = await fetch('/mesures');            // ← ton point d’accès
-            if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
-            etats = await reponse.json();                   // ex. : { chambre:'on', salon:'off', ... }
-        } catch (err) {
-            console.warn('Fetch KO → données fictives', err);
-            etats = {                                       // fallback uniquement ici
-            chambre : Math.random() < 0.5 ? 'on' : 'off',
-            salon   : Math.random() < 0.5 ? 'on' : 'off',
-            cuisine : Math.random() < 0.5 ? 'on' : 'off'
-            };
-        }
+                    try {
+                        const reponse = await fetch('/mesures'); // requête vers ton endpoint
+                        if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
+                        const data = await reponse.json();       // on récupère tout le JSON
+                        etats = data.led;                        // on extrait juste la section "led"
+                    } catch (err) {
+                        console.warn('Fetch KO → données fictives', err);
+                        etats = {
+                            chambre : Math.random() < 0.5 ? 'on' : 'off',
+                            salon   : Math.random() < 0.5 ? 'on' : 'off',
+                            cuisine : Math.random() < 0.5 ? 'on' : 'off'
+                        };
+                    }
 
-        // Mise à jour du DOM
-        Object.entries(etats).forEach(([piece, etat]) => {
-            const span = document.getElementById(`etat-${piece}`);
-            if (span) span.textContent = etat === 'on' ? 'allumée' : 'éteinte';
-        });
+                    // Mise à jour du DOM
+                    for (const piece in etats) {
+                        const etat = etats[piece];
+                        const texte = etat === "on" ? "allumée" : "éteinte";
+                        const id = "etat-" + piece;
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.textContent = texte;
+                        }
+                    }
+                }
 
-        return etats;                                    // si tu veux réutiliser la valeur
-        }
-        </script>
+            </script>
     </body>
 </html>
