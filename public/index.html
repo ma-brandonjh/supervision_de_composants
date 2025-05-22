@@ -175,7 +175,7 @@
                 <h3>LED de la cuisine:</h3>
                 <h4 id="etat-cuisine">éteinte</h4>
                 <ul>
-                    <li><button onclick="rafraichirJSON()">Rafraichir</button></li>
+                    <li><button onclick="obtenirEtats()">Rafraichir</button></li>
                 </ul>
             </div>
             <hr>
@@ -254,28 +254,36 @@
             }
 
         </script>
-
+                
         <script>
-            function rafraichirJSON() {
-                const pièces = ["chambre", "salon", "cuisine"];
-                const états = {};
+        async function obtenirEtats () {
+        let etats;
 
-                pièces.forEach(p => {
-                    const état = Math.random() < 0.5 ? "off" : "on";
-                    états[p] = état;
+        try {
+            const reponse = await fetch('/mesures');            // ← ton point d’accès
+            if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
+            etats = await reponse.json();                   // ex. : { chambre:'on', salon:'off', ... }
+        } catch (err) {
+            console.warn('Fetch KO → données fictives', err);
+            etats = {                                       // fallback uniquement ici
+            chambre : Math.random() < 0.5 ? 'on' : 'off',
+            salon   : Math.random() < 0.5 ? 'on' : 'off',
+            cuisine : Math.random() < 0.5 ? 'on' : 'off'
+            };
+        }
 
-                    // Mise à jour dans le HTML (on → allumée, off → éteinte)
-                    const texte = état === "on" ? "allumée" : "éteinte";
-                    const id = "etat-" + p;
-                    const element = document.getElementById(id);
-                    if (element) {
-                        element.textContent = texte;
-                    }
-                });
+        // Mise à jour du DOM
+        Object.entries(etats).forEach(([piece, etat]) => {
+            const span = document.getElementById(`etat-${piece}`);
+            if (span) span.textContent = etat === 'on' ? 'allumée' : 'éteinte';
+        });
 
-                // (Optionnel) Affichage console
-                console.log(états);
-            }
+        return etats;                                    // si tu veux réutiliser la valeur
+        }
+
+        // Appel lors du clic sur le bouton
+        document.getElementById('actualiser')
+                .addEventListener('click', obtenirEtats);
         </script>
 
         <script>
