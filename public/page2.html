@@ -240,6 +240,20 @@ function generateTable(data){
     table.appendChild(tbody);
     container.appendChild(table);
 }
+
+            function envoyerCommande(commande) {
+                fetch('/led', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ led: commande })
+                })
+                    .then(res => {
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        return res.text();
+                    })
+                    .then(txt => console.log('Réponse du serveur :', txt))
+                    .catch(err => console.error('Erreur POST :', err));
+            }
 </script>
 
         <script>obtenirEtats()</script>
