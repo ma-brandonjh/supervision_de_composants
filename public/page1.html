@@ -2,7 +2,6 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="5">
         <title>Mesure</title>
         <style>
             * {
@@ -151,6 +150,7 @@
                 <li><a href="/mesure"><button>Température et humidité</button></a></li>
                 <li><a href="/led-state"><button>États des LEDs</button></a></li>
                 <li><a href="/led-cmd"><button>Contrôle des LEDs</button></a></li>
+                <li><button onclick="obtenirEtats()">Rafraichir</button></li>
             </ul>
         </header>
 
@@ -160,9 +160,6 @@
             <div class="diva">
                 <h2>Journal des dernières mesures</h2><br>
                 <div class="divc" id="table-container"></div>
-                <ul>
-                    <li><button onclick="rafraichirTable()">Rafraichir</button></li>
-                </ul>
             </div>
         </main>
 
