@@ -1,7 +1,7 @@
 import requests
 
 # Adresse du serveur (modifie l'IP et port selon ton reseau)
-SERVER_URL = "http://192.168.1.100:3000"
+SERVER_URL = "http://192.168.18.8:3000"
 
 def envoyer_mesures(mesures):
     try:
@@ -13,7 +13,7 @@ def envoyer_mesures(mesures):
 
 def recuperer_ordres_leds():
     try:
-        response = requests.get(f"{SERVER_URL}/ordre-leds")
+        response = requests.get(f"{SERVER_URL}/ordres-leds")
         if response.status_code == 200:
             return response.json()
         else:
