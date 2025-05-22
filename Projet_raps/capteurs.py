@@ -7,7 +7,7 @@ def generer_mesures():
     horodatage = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     return {
+        "time": horodatage,
         "temperature": str(temperature),
-        "humidite": str(humidite),
-        "date": horodatage
+        "humidity": str(humidite)
     }
