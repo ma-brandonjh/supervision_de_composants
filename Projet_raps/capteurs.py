@@ -8,6 +8,6 @@ def generer_mesures():
 
     return {
         "time": horodatage,
-        "temperature": str(temperature),
-        "humidity": str(humidite)
+        "temperature": temperature,
+        "humidity": humidite
     }
