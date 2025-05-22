@@ -2,7 +2,10 @@ import pygame
 import sys
 from capteurs import generer_mesures
 from communication import envoyer_mesures, recuperer_ordres_leds
-from leds import appliquer_ordres
+from leds_rpi import LED_RPi
+
+gpio = LED_RPi()
+gpio.setup()
 
 pygame.init()
 largeur, hauteur = 700, 400
@@ -45,7 +48,6 @@ def dessiner_interface():
     fenetre.blit(font.render("Recevoir", True, NOIR), (210, 55))
 
 
-    
     y_base = 120
     for i, (nom, etat) in enumerate(etat_leds.items()):
         texte = f"{nom.capitalize()} : {etat}"
@@ -54,8 +56,8 @@ def dessiner_interface():
     
     if derniere_mesure:
         temp = derniere_mesure.get("temperature", "--")
-        hum = derniere_mesure.get("humidite", "--")
-        date = derniere_mesure.get("date", "")
+        hum = derniere_mesure.get("humidity", "--")
+        date = derniere_mesure.get("time", "")
         
         texte_mesure = petite_font.render(f"Temperature : {temp} C | Humidite : {hum} %", True, BLEU)
         texte_date = petite_font.render(f"Date : {date}", True, NOIR)
@@ -79,29 +81,33 @@ def boucle_principale():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                gpio.fermer_gpio()
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if bouton_envoyer.collidepoint(event.pos):
                     mesure = generer_mesures()
                     envoyer_mesures(mesure)
+                    print(mesure)
                     derniere_mesure = mesure
 
                 if bouton_recevoir.collidepoint(event.pos):
                     ordres = recuperer_ordres_leds()
                     if ordres:
                         etat_leds = ordres
+                        gpio.appliquer_ordres(ordres)
 
         
         if compteur_temps >= 5000:
             compteur_temps = 0
             mesure = generer_mesures()
             envoyer_mesures(mesure)
-            derniere_mesure = str(mesure)
+            derniere_mesure = mesure
 
             ordres = recuperer_ordres_leds()
             if ordres:
                 etat_leds = ordres
+                gpio.appliquer_ordres(ordres)
 
         dessiner_interface()
         clock.tick(30)
