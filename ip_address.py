@@ -1,1 +1,0 @@
-ip_addresse = "https://<VOTRE_ADRESSE_IP>:3000"
