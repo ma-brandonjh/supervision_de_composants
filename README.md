@@ -2,8 +2,17 @@
  
 
 # pour tester l'interface:
-    1-démarer à l'aide de la commande: ''node serveur.js'' sur bash
-    2-cliquer à l'aide de control sur le lien localhost généré dans le terminal
+    1- Démarer à l'aide de la commande: ''node serveur.js'' sur bash
+    2- Cliquer à l'aide de control sur le lien localhost généré dans le terminal
+
+# pour utiliser le code client Python
+
+    1- Installer l'environnement virtuel: `python -m venv ./{nom_fichier_venv}`
+    2- Activer l'environement virtuel: `source {nom_fichier_venv}/bin/activate`
+    3- Installer les packages python: `pip install -r requirements.txt`
+    4- Entrer dans le dossier "Projets_raps": `cd Projets_raps`
+    5- Ajouter l'IP du serveur dans le fichier "communication.py" où il est écrit '<VOTRE_ADDRESSE_IP>'
+    6- Lancer le fichier "interface.py": `python interface.py`
 
 # arborescence
 /
